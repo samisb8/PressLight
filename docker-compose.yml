@@ -1,0 +1,14 @@
+services:
+  rl-training:
+    build: .
+    container_name: rl_presslight_training_2
+    volumes:
+      - ./results:/app/results
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "
+      python -m src.run_experiment --episodes 150 &&
+      python -m src.evaluate_comparison --model_path results/models/presslight_ep150.pth
+      "
